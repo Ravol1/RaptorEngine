@@ -9,7 +9,7 @@
 #include "engine/video/sprite/Sprite.h"
 #include "engine/video/sprite/factory/factory.h"
 #include "engine/video/texture/TextureFactory.h"
-#include "engine/game_event/game_event.h"
+#include "events/game_event.h"
 
 #include "interpreter/Interpreter.h"
 
@@ -20,7 +20,7 @@ using TextureFactory = raptor::engine::video::texture::TextureFactory;
 using ScreenObject = raptor::engine::video::ScreenObject;
 using Interpreter = raptor::interpreter::Interpreter;
 
-namespace game_event = raptor::engine::game_event;
+namespace game_event = raptor::game_event;
 
 
 

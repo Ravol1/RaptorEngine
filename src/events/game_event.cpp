@@ -1,7 +1,7 @@
 #include "game_event.h"
 
-namespace raptor::engine::game_event {
-	auto EventQueue::push(GameEvent& event) -> void {
+namespace raptor::game_event {
+	auto EventQueue::push(GameEvent event) -> void {
 		std::lock_guard<std::mutex> lock(mutex_);
 		queue_.push_back(event);
 	}

@@ -1,5 +1,5 @@
-#ifndef RAPTOR_RENDEREVENTQUEUE_H
-#define RAPTOR_RENDEREVENTQUEUE_H
+#ifndef RAPTOR_RENDER_EVENT_H
+#define RAPTOR_RENDER_EVENT_H
 
 #include <mutex>
 #include <string>
@@ -7,26 +7,27 @@
 #include <vector>
 
 
-namespace raptor::engine::game_event {
+namespace raptor::game_event {
 
 	enum class GameEventType {
-		RenderImage
-	};
+		RenderImage,};
 
 
 	struct RenderImageData {std::string path; float x,y; float width, height;};
 
+	using GameEventData = std::variant<RenderImageData>;
+
 
 	struct GameEvent {
 		GameEventType type;
-		std::variant<RenderImageData> data;
+		GameEventData data;
 	};
 
 
 
 	class EventQueue {
 	public:
-		auto push(GameEvent& event) -> void;
+		auto push(GameEvent event) -> void;
 		auto flush() -> std::vector<GameEvent>;
 
 	private:
@@ -35,4 +36,4 @@ namespace raptor::engine::game_event {
 	};
 } // raptor::engine::game_event
 
-#endif //RAPTOR_RENDEREVENTQUEUE_H
+#endif //RAPTOR_RENDER_EVENT_H
