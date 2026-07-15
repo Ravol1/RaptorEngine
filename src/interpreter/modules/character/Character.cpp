@@ -16,7 +16,7 @@ namespace raptor::interpreter::character {
 
 
 	auto Character::register_commands(Interpreter* interpreter) -> void {
-		interpreter->register_command("chara_new", [this](const Tag& tag) {
+		interpreter->register_command("chara_new", [this](const Tag& tag, Interpreter*) {
 			detail::chara_new(tag, impl_->characters);
 		});
 	}

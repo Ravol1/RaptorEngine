@@ -18,7 +18,7 @@ namespace raptor::interpreter {
 		~Interpreter();
 
 
-		using Handler = std::function<void(const Tag&)>;
+		using Handler = std::function<void(const Tag&, Interpreter*)>;
 
 		enum Severity {
 			Info,

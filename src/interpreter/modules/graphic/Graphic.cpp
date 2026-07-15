@@ -23,11 +23,11 @@ namespace raptor::interpreter::graphic {
 
 
 	auto Graphic::register_commands(Interpreter* interpreter) -> void {
-		interpreter->register_command("layopt", [this](const Tag& tag) {
+		interpreter->register_command("layopt", [this](const Tag& tag, Interpreter*) -> void {
 			layopt(tag, impl_->layerRegistry_, impl_->current_);
 		});
 
-		interpreter->register_command("position", [this](const Tag& tag) {
+		interpreter->register_command("position", [this](const Tag& tag, Interpreter*) {
 			position(tag, impl_->layerRegistry_, impl_->current_);
 		});
 	}

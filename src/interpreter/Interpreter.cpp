@@ -386,7 +386,8 @@ namespace raptor::interpreter {
 			// --- Register the macro or redefine it if already existing: it begins right after the [macro] tag ---
 			macros_[name] = Frame{current_.program, current_.ip+1, current_.file};
 			if (!commands_.contains(name))
-				owner_->register_command(name, [this, name](const Tag&){ this->run_macro(name); });
+				owner_->register_command(name, [this, name](const Tag&, Interpreter*)
+					{ this->run_macro(name); });
 
 			// Skip past the macro's body and the closing [endmacro] in the current frame.
 			current_.ip = mp + 1;
@@ -562,19 +563,17 @@ namespace raptor::interpreter {
 
 
 
+		register_command("call", [this](const Tag& tag, Interpreter*){impl_->call_cmd(tag);});
+		register_command("return", [this](const Tag& tag, Interpreter*){impl_->return_cmd(tag);});
 
+		register_command("jump", [this](const Tag& tag, Interpreter*){impl_->jump_cmd(tag);});
 
-		register_command("call", [this](const Tag& tag){impl_->call_cmd(tag);});
-		register_command("return", [this](const Tag& tag){impl_->return_cmd(tag);});
+		register_command("macro", [this](const Tag& tag, Interpreter*){impl_->macro_cmd(tag);});
+		register_command("endmacro", [this](const Tag& tag, Interpreter*){impl_->endmacro_cmd(tag);});
 
-		register_command("jump", [this](const Tag& tag){impl_->jump_cmd(tag);});
+		register_command("iscript", [this](const Tag& tag, Interpreter*){impl_->iscript_cmd(tag);});
 
-		register_command("macro", [this](const Tag& tag){impl_->macro_cmd(tag);});
-		register_command("endmacro", [this](const Tag& tag){impl_->endmacro_cmd(tag);});
-
-		register_command("iscript", [this](const Tag& tag){impl_->iscript_cmd(tag);});
-
-		register_command("label", [](const Tag&){});
+		register_command("label", [](const Tag&, Interpreter*){});
 	}
 
 
@@ -603,7 +602,7 @@ namespace raptor::interpreter {
 
 
 		// Execute the tag
-		it->second(tag);
+		it->second(tag, this);
 	}
 
 
