@@ -1,5 +1,5 @@
-#ifndef TYRANO_TYRANO_H
-#define TYRANO_TYRANO_H
+#ifndef RAPTOR_TAG_H
+#define RAPTOR_TAG_H
 #include <string>
 #include <unordered_map>
 
@@ -29,4 +29,4 @@ namespace raptor {
 	};
 } // raptor
 
-#endif //TYRANO_TYRANO_H
+#endif // RAPTOR_TAG_H
