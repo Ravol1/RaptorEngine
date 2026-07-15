@@ -5,8 +5,6 @@
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_render.h>
 
-#include "engine/video/ScreenObject.h"
-#include "engine/video/sprite/Sprite.h"
 #include "engine/video/sprite/factory/factory.h"
 #include "engine/video/texture/TextureFactory.h"
 #include "events/game_event.h"
@@ -14,10 +12,6 @@
 #include "interpreter/Interpreter.h"
 
 
-
-using Sprite = raptor::engine::video::sprite::Sprite;
-using TextureFactory = raptor::engine::video::texture::TextureFactory;
-using ScreenObject = raptor::engine::video::ScreenObject;
 using Interpreter = raptor::interpreter::Interpreter;
 
 namespace game_event = raptor::game_event;
@@ -26,9 +20,6 @@ namespace game_event = raptor::game_event;
 
 constexpr int WIDTH = 1280;
 constexpr int HEIGHT = 720;
-
-game_event::EventQueue game_event_queue;
-
 
 
 std::atomic<bool> running{true};
@@ -49,23 +40,21 @@ auto poll_events() -> bool {
 
 
 
-auto create_test_sprite(SDL_Renderer* renderer, TextureFactory& texture_factory)
-	-> std::unique_ptr<Sprite> {
-	namespace sprite_factory = raptor::engine::video::sprite::factory;
+void process_event(const game_event::GameEvent& event, SDL_Window* window) {
+	switch (event.type) {
+	default:
+		break;
 
+	case game_event::GameEventType::ChangeTitle:
+		if (auto val = std::get_if<game_event::ChangeTitleData>(&event.data)) {
+			SDL_SetWindowTitle(window, val->title.c_str());
+		}
 
-	constexpr char path[] = "test_data/data/fgimage/chara/1/aびっくり.png";
-
-
-	auto texture = texture_factory.from_file(path, renderer);
-	auto sprite = sprite_factory::create_static();
-
-
-
-	sprite->set_texture(texture);
-
-	return sprite;
+		break;
+	}
 }
+
+
 
 
 void log_fps(double dt) {
@@ -93,24 +82,7 @@ void log_fps(double dt) {
 
 
 
-void graphics_loop(SDL_Renderer* renderer) {
-
-	// ------------
-	// Test code
-	// ------------
-	TextureFactory texture_factory(renderer);
-
-	auto sprite = create_test_sprite(renderer, texture_factory);
-	ScreenObject screen_obj(std::move(sprite));
-
-	screen_obj.set_pos(SDL_FPoint{0, 0});
-	//screen_obj.set_pos({WIDTH / 2.0f, HEIGHT / 2.0f});
-	screen_obj.set_visible(true);
-
-	// ------------
-	// End test
-	// ------------
-
+void graphics_loop(SDL_Renderer* renderer, SDL_Window* window, game_event::EventQueue* event_queue) {
 	const auto frequency = static_cast<double>(SDL_GetPerformanceFrequency());
 	uint64_t last_time = SDL_GetPerformanceCounter();
 
@@ -129,6 +101,9 @@ void graphics_loop(SDL_Renderer* renderer) {
 		if (dt > 0.1) dt = 0.1;
 
 
+		for (const auto& evt : event_queue->flush())
+			process_event(evt, window);
+
 		log_fps(dt);
 
 
@@ -136,8 +111,6 @@ void graphics_loop(SDL_Renderer* renderer) {
 		SDL_SetRenderDrawColor(renderer, 30, 30, 40, 255);
 		SDL_RenderClear(renderer);
 
-		screen_obj.update(dt);
-		screen_obj.render(renderer);
 
 		SDL_RenderPresent(renderer);	// Synchronize with monitor refresh_rate
 	}
@@ -145,33 +118,33 @@ void graphics_loop(SDL_Renderer* renderer) {
 
 
 auto interpreter_log(const std::string& msg, Interpreter::Severity severity) -> void {
+	std::string sev_str;
+
 	switch (severity) {
 		case Interpreter::Severity::Info:
-			//std::cout << msg << std::endl;
-			break;
+			sev_str = "Info"; break;
 
 		case Interpreter::Severity::Warning:
-			std::cout << msg << std::endl;
-			break;
+			sev_str = "Warning"; break;
 
 		case Interpreter::Severity::Error:
-			std::cerr << msg << std::endl;
-			break;
+			sev_str = "Error"; break;
 
 		case Interpreter::Severity::Fatal:
-			std::cerr << "FATAL: " << msg << std::endl;
-			break;
+			sev_str = "Fatal"; break;
 	}
+
+	std::print("[{}] {}\n", sev_str, msg);
 }
 
 
 
-void interpreter_thread_loop() {
-	Interpreter interpreter{"test_data/"};
-	// interpreter.set_error_handler(interpreter_log);
+void interpreter_thread_loop(game_event::EventQueue* event_queue) {
+	Interpreter interpreter{"test_data_demo/", event_queue};
+	interpreter.set_log(interpreter_log);
 	interpreter.load_modules();
 	interpreter.start_execution(running);
-	running = false;
+	//running = false;
 }
 
 
@@ -186,10 +159,13 @@ auto activate_VSYNC(SDL_Renderer* renderer) -> bool {
 
 
 auto main() -> int {
+	game_event::EventQueue game_event_queue{};
+
+
 	SDL_Init(SDL_INIT_VIDEO);
 
 	// Create window and renderer
-	SDL_Window* window = SDL_CreateWindow("test", WIDTH, HEIGHT, 0);
+	SDL_Window* window = SDL_CreateWindow("Raptor", WIDTH, HEIGHT, 0);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, nullptr);
 
 	if (!activate_VSYNC(renderer)) return -1;
@@ -200,12 +176,11 @@ auto main() -> int {
 
 
 	// Start the main graphics loop.
-	graphics_loop(renderer);
-
-
+	graphics_loop(renderer, window, &game_event_queue);
 
 
 	scripting_thread.join(); // Wait for the interpreter loop to finish.
+
 
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
