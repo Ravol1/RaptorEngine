@@ -156,17 +156,10 @@ namespace raptor::interpreter {
 
 
 
-		/// Callback invoked to report execution errors.
 		std::function<void(const std::string& msg, Severity severity)> log_func;
-
-
-		/// Back-pointer to the owning Interpreter instance
 		Interpreter* owner_;
 
-
-		/// Current/last error state used by clear_error() to decide how to recover.
 		Errors error_ = None;
-
 		Paths paths_{};
 
 
@@ -179,14 +172,9 @@ namespace raptor::interpreter {
 		/// Registry of user-defined macros, keyed by macro name, storing the frame where macro execution starts.
 		std::unordered_map<std::string, Frame> macros_;
 
-
-		/// The currently executing frame.
 		Frame current_{};
 
-		/// Stack of saved frames for [call]/[return] control flow.
 		std::vector<Frame> call_stack_;
-
-		/// Stack of saved frames for macro invocation/return.
 		std::vector<Frame> macro_stack_;
 
 
