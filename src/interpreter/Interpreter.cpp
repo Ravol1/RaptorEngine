@@ -204,6 +204,12 @@ namespace raptor::interpreter {
 				auto contents = read_file(path);
 				auto program = parser::find_and_parse_all(contents);
 				programs_[path] = parser::find_and_parse_all(contents);
+
+
+				if (log_func)
+					log_func(std::format(
+						"Parsed '{}': {} tags found", path, programs_[path].size()
+					), Severity::Info);
 			}
 
 			auto tmp = programs_[path];
@@ -431,9 +437,6 @@ namespace raptor::interpreter {
 		 *       implemented in this function (see trailing comment in the body).
 		 */
 		auto iscript_cmd(const Tag& tag) -> void {
-
-
-
 			std::string script_text;
 
 
@@ -462,16 +465,6 @@ namespace raptor::interpreter {
 
 
 			current_.ip = script_ptr + 1;
-
-
-			auto& file = current_.file;
-			auto line = tag.line;
-
-
-			log_func(std::format(
-				"{}:{}: script detected with text\n{}",
-				file, line, script_text
-			), Severity::Info);
 		}
 
 
@@ -599,6 +592,12 @@ namespace raptor::interpreter {
 				"Unknown tag '{}'",
 				tag.type
 			));
+
+		if (impl_->log_func)
+			impl_->log_func(std::format(
+				"{}:{}: dispatching tag [{}]",
+				impl_->current_.file, tag.line, tag.type
+			), Severity::Info);
 
 
 		// Execute the tag
