@@ -6,6 +6,7 @@
 #include <filesystem>
 
 #include "tag/tag.h"
+#include "events/game_event.h"
 
 
 namespace fs = std::filesystem;
@@ -14,7 +15,7 @@ namespace fs = std::filesystem;
 namespace raptor::interpreter {
 	class Interpreter {
 	public:
-		explicit Interpreter(const fs::path& root);
+		explicit Interpreter(const fs::path& root, game_event::EventQueue* event_queue);
 		~Interpreter();
 
 
@@ -33,6 +34,8 @@ namespace raptor::interpreter {
 
 		auto execute_tag(const Tag& tag) -> void;
 		auto register_command(const std::string& name, const Handler& handler) -> void;
+
+		auto push_event(game_event::GameEventType type, game_event::GameEventData data) -> void;
 
 
 	private:

@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <fstream>
+#include <utility>
 
 #include "parser/parser.h"
 #include "interpreter/modules/graphic/Graphic.h"
@@ -98,13 +99,14 @@ namespace raptor::interpreter {
 		 * @brief	Resolves the mandatory subdirectories and loads the
 		 *			entry-point script as the initial execution frame.
 		 *
-		 * @param owner Pointer back to the owning Interpreter (used to
-		 *              register commands created dynamically, i.e. macros).
-		 * @param root  Root directory of the game data.
-		 * @throws std::runtime_error	if one or more of the required subdirectories
+		 * @param owner			Pointer back to the owning Interpreter (used to
+		 *						register commands created dynamically, i.e. macros).
+		 * @param root			Root directory of the game data.
+		 * @param event_queue	ActiveEventQueue object.
+		 * @throws std::runtime_error	If one or more of the required subdirectories
 		 *								does not exist under root.
 		 */
-		explicit Impl(Interpreter* owner, const fs::path& root) : owner_(owner) {
+		explicit Impl(Interpreter* owner, const fs::path& root, game_event::EventQueue* event_queue) : owner_(owner) {
 
 			// Locate the mandatory "data/scenario" directory; this is where
 			// all scenario (.ks) files are expected to live.
@@ -114,6 +116,9 @@ namespace raptor::interpreter {
 					"Required subdirectory 'data/scenario' not found in root '{}'",
 					root.string()
 				));
+
+
+			event_queue_ = event_queue;
 
 
 			// Load and set the entry-point script as the initial execution frame.
@@ -176,6 +181,8 @@ namespace raptor::interpreter {
 
 		std::vector<Frame> call_stack_;
 		std::vector<Frame> macro_stack_;
+
+		game_event::EventQueue* event_queue_;
 
 
 		/**
@@ -525,8 +532,8 @@ namespace raptor::interpreter {
 
 
 
-	Interpreter::Interpreter(const fs::path& root) {
-		impl_ = std::make_unique<Impl>(this, root);
+	Interpreter::Interpreter(const fs::path& root, game_event::EventQueue* event_queue) {
+		impl_ = std::make_unique<Impl>(this, root, event_queue);
 
 
 		if (!fs::exists(root))
@@ -637,5 +644,10 @@ namespace raptor::interpreter {
 			if (impl_->current_.ip == impl_->current_.program->size())
 				impl_->handle_EOF();
 		}
+	}
+
+
+	auto Interpreter::push_event(game_event::GameEventType type, game_event::GameEventData data) -> void {
+		impl_->event_queue_->push({type, std::move(data)});
 	}
 } // raptor::interpreter

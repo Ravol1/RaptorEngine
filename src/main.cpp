@@ -172,7 +172,7 @@ auto main() -> int {
 
 
 	// Launch interpreter thread
-	std::thread scripting_thread(interpreter_thread_loop);
+	std::thread scripting_thread(interpreter_thread_loop, &game_event_queue);
 
 
 	// Start the main graphics loop.

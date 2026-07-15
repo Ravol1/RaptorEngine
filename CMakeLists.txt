@@ -42,6 +42,7 @@ add_executable(raptor
         src/interpreter/modules/graphic/detail/layer/helpers.h
 		src/helper/type_conversions.h
 		src/helper/color.cpp
+		src/interpreter/modules/graphic/detail/commands/title.cpp
 )
 
 target_include_directories(raptor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)

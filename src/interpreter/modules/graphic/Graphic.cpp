@@ -30,6 +30,10 @@ namespace raptor::interpreter::graphic {
 		interpreter->register_command("position", [this](const Tag& tag, Interpreter*) {
 			position(tag, impl_->layerRegistry_, impl_->current_);
 		});
+
+		interpreter->register_command("title", [this](const Tag& tag, Interpreter* interpreter) -> void {
+			title(tag, interpreter);
+		});
 	}
 } // raptor::interpreter::graphic
 

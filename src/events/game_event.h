@@ -10,12 +10,15 @@
 namespace raptor::game_event {
 
 	enum class GameEventType {
-		RenderImage,};
+		RenderImage,
+		ChangeTitle,
+	};
 
 
 	struct RenderImageData {std::string path; float x,y; float width, height;};
+	struct ChangeTitleData {std::string title;};
 
-	using GameEventData = std::variant<RenderImageData>;
+	using GameEventData = std::variant<RenderImageData, ChangeTitleData>;
 
 
 	struct GameEvent {
