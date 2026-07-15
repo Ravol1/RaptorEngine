@@ -20,8 +20,8 @@ add_executable(raptor
         src/engine/video/sprite/Sprite.h
         src/engine/video/sprite/factory/factory.h
         src/engine/video/texture/TextureFactory.h
-		src/engine/game_event/game_event.cpp
-		src/engine/game_event/game_event.h
+        src/events/game_event.cpp
+        src/events/game_event.h
 		src/interpreter/modules/graphic/detail/layer/layer.h
 		src/interpreter/modules/graphic/detail/layer/LayerRegistry.h
 		src/interpreter/modules/graphic/detail/layer/LayerRegistry.cpp
