@@ -12,14 +12,10 @@ namespace raptor::interpreter::graphic::detail {
 	/** @brief Set layer options. */
 	auto layopt(const Tag& tag, LayerRegistry& layer_registry, const CurrentLayer& current_layer) -> void;
 
-	/**
-	 * @brief	Set various options for the message layer.
-	 *			Any parameters that are omitted will not change their attributes.
-	 */
+	/** @brief	Set options for the message layer.*/
 	auto position(const Tag& tag, LayerRegistry& layer_registry, const CurrentLayer& current_layer) -> void;
 
-
-	/** @brief Specifies the game title*/
+	/** @brief Specifies the game title */
 	auto title(const Tag& tag, Interpreter* interpreter) -> void;
 } // raptor::interpreter::graphic::detail
 

@@ -43,6 +43,12 @@ add_executable(raptor
 		src/helper/type_conversions.h
 		src/helper/color.cpp
 		src/interpreter/modules/graphic/detail/commands/title.cpp
+		src/Application/Application.cpp
+		src/Application/Application.h
+		src/engine/video/GraphicsLoop.cpp
+		src/engine/video/GraphicsLoop.h
+		src/engine/diagnostic/log_fps.h
+		src/engine/diagnostic/log_fps.cpp
 )
 
 target_include_directories(raptor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
