@@ -467,6 +467,13 @@ namespace raptor::interpreter {
 
 
 
+		auto clearstack_cmd() -> void {
+			call_stack_.clear();
+			macro_stack_.clear();
+		}
+
+
+
 		/**
 		 * @brief Attempts to recover from the current error state,
 		 *        adjusting the current execution frame as needed.
@@ -562,9 +569,12 @@ namespace raptor::interpreter {
 		register_command("macro", [this](const Tag& tag, Interpreter*){impl_->macro_cmd(tag);});
 		register_command("endmacro", [this](const Tag& tag, Interpreter*){impl_->endmacro_cmd(tag);});
 
+		register_command("clearstack", [this](const Tag&, Interpreter*){impl_->clearstack_cmd();});
+
 		register_command("iscript", [this](const Tag& tag, Interpreter*){impl_->iscript_cmd(tag);});
 
 		register_command("label", [](const Tag&, Interpreter*){});
+
 	}
 
 
