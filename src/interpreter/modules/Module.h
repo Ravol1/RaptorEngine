@@ -13,11 +13,11 @@ namespace raptor::interpreter {
 
 
 		Module(const Module&) = delete;
-		Module& operator=(const Module&) -> Module& = delete;
+		Module& operator=(const Module&) = delete;
 
 
 		Module(Module&&) = delete;
-		Module& operator=(Module&&) -> Module& = delete;
+		Module& operator=(Module&&) = delete;
 
 	};
 } // raptor::interpreter
