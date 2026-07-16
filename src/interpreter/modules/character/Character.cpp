@@ -11,7 +11,7 @@ namespace raptor::interpreter::character {
 	};
 
 
-	Character::Character() : impl_(std::make_unique<Impl>()){}
+	Character::Character() : Module(), impl_(std::make_unique<Impl>()){}
 	Character::~Character() = default;
 
 

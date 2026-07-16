@@ -7,10 +7,17 @@
 namespace raptor::interpreter {
 	class Module {
 	public:
+		Module() = default;
 		virtual ~Module() = default;
 		virtual auto register_commands(Interpreter* interpreter) -> void = 0;
 
-	private:
+
+		Module(const Module&) = delete;
+		Module& operator=(const Module&) -> Module& = delete;
+
+
+		Module(Module&&) = delete;
+		Module& operator=(Module&&) -> Module& = delete;
 
 	};
 } // raptor::interpreter

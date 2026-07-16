@@ -18,7 +18,7 @@ namespace raptor::interpreter::graphic {
 		FreeLayer freeLayer_;
 	};
 
-	Graphic::Graphic() : impl_(std::make_unique<Impl>()){};
+	Graphic::Graphic() : Module(), impl_(std::make_unique<Impl>()){};
 	Graphic::~Graphic() = default;
 
 
