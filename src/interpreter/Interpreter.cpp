@@ -7,6 +7,7 @@
 #include "parser/parser.h"
 #include "interpreter/modules/graphic/Graphic.h"
 #include "interpreter/modules/character/Character.h"
+#include "modules/input/Input.h"
 
 
 namespace raptor::interpreter {
@@ -91,6 +92,7 @@ namespace raptor::interpreter {
 		struct Modules {
 			graphic::Graphic graphic;
 			character::Character character;
+			input::Input input;
 		};
 		Modules modules_{};
 
@@ -132,6 +134,7 @@ namespace raptor::interpreter {
 		auto load_modules() -> void {
 			modules_.graphic.register_commands(owner_);
 			modules_.character.register_commands(owner_);
+			modules_.input.register_commands(owner_);
 		}
 
 

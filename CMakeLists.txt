@@ -49,6 +49,11 @@ add_executable(raptor
 		src/engine/video/GraphicsLoop.h
 		src/engine/diagnostic/log_fps.h
 		src/engine/diagnostic/log_fps.cpp
+		src/interpreter/modules/input/Input.cpp
+		src/interpreter/modules/input/Input.h
+		src/interpreter/modules/input/detail/Status.h
+		src/interpreter/modules/input/detail/commands/commands.h
+		src/interpreter/modules/input/detail/commands/keyconfig.cpp
 )
 
 target_include_directories(raptor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
