@@ -13,12 +13,16 @@ namespace raptor::interpreter::graphic {
 
 	class Graphic::Impl {
 	public:
-		LayerRegistry layerRegistry_;
-		CurrentLayer current_;
-		FreeLayer freeLayer_;
+		LayerRegistry layerRegistry_{};
+		CurrentLayer current_{};
+		FreeLayer freeLayer_{};
 	};
 
-	Graphic::Graphic() : Module(), impl_(std::make_unique<Impl>()){};
+	Graphic::Graphic() : Module(), impl_(std::make_unique<Impl>()) {
+		impl_->current_.layer = impl_->layerRegistry_.get_or_create("message0");
+		impl_->current_.layer->set_visible(true, Layer::LayerPage::Fore);
+	}
+
 	Graphic::~Graphic() = default;
 
 
