@@ -140,7 +140,7 @@ namespace raptor::interpreter::graphic::detail {
 
 		auto set_msg_vertical(bool vertical, LayerPage page) {
 			with_msg_component(page, [vertical](auto& msg) {
-				msg.radius = vertical;
+				msg.vertical = vertical;
 			});
 		}
 

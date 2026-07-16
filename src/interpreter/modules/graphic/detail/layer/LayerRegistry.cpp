@@ -1,5 +1,5 @@
 #include "LayerRegistry.h"
-#include "interpreter/modules/graphic/detail/layer/layer.h"
+#include "interpreter/modules/graphic/detail/layer/Layer.h"
 
 
 namespace raptor::interpreter::graphic::detail {

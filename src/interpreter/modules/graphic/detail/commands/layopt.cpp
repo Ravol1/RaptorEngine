@@ -2,7 +2,7 @@
 
 #include "helper/type_conversions.h"
 #include "tag/tag.h"
-#include "interpreter/modules/graphic/detail/layer/layer.h"
+#include "interpreter/modules/graphic/detail/layer/Layer.h"
 #include "interpreter/modules/graphic/detail/layer/CurrentLayer.h"
 #include "interpreter/modules/graphic/detail/layer/helpers.h"
 

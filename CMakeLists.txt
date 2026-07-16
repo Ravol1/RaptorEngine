@@ -22,7 +22,7 @@ add_executable(raptor
         src/engine/video/texture/TextureFactory.h
         src/events/game_event.cpp
         src/events/game_event.h
-		src/interpreter/modules/graphic/detail/layer/layer.h
+		src/interpreter/modules/graphic/detail/layer/Layer.h
 		src/interpreter/modules/graphic/detail/layer/LayerRegistry.h
 		src/interpreter/modules/graphic/detail/layer/LayerRegistry.cpp
 		src/interpreter/modules/graphic/Graphic.cpp

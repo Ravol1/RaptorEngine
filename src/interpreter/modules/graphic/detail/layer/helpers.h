@@ -3,7 +3,7 @@
 
 #include <charconv>
 
-#include "interpreter/modules/graphic/detail/layer/layer.h"
+#include "interpreter/modules/graphic/detail/layer/Layer.h"
 #include "interpreter/modules/graphic/detail/layer/LayerRegistry.h"
 #include "interpreter/modules/graphic/detail/layer/CurrentLayer.h"
 #include "tag/tag.h"
