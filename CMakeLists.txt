@@ -22,7 +22,7 @@ add_executable(raptor
         src/engine/video/texture/TextureFactory.h
         src/events/game_event.cpp
         src/events/game_event.h
-		src/interpreter/modules/graphic/detail/layer/Layer.h
+        src/interpreter/modules/graphic/detail/layer/Layer.h
 		src/interpreter/modules/graphic/detail/layer/LayerRegistry.h
 		src/interpreter/modules/graphic/detail/layer/LayerRegistry.cpp
 		src/interpreter/modules/graphic/Graphic.cpp
@@ -30,7 +30,7 @@ add_executable(raptor
 		src/interpreter/modules/graphic/detail/commands/layopt.cpp
 		src/interpreter/modules/graphic/detail/commands/commands.h
 		src/interpreter/modules/graphic/detail/layer/CurrentLayer.h
-		src/interpreter/modules/graphic/detail/layer/FreeLayer.h
+		src/interpreter/modules/graphic/detail/layer/FixLayer.h
 		src/interpreter/modules/character/Character.cpp
 		src/interpreter/modules/character/Character.h
 		src/interpreter/modules/character/detail/CharacterInfo.h
@@ -54,6 +54,10 @@ add_executable(raptor
 		src/interpreter/modules/input/detail/Status.h
 		src/interpreter/modules/input/detail/commands/commands.h
 		src/interpreter/modules/input/detail/commands/keyconfig.cpp
+		src/interpreter/modules/graphic/detail/layer/MessageLayer.h
+		src/interpreter/modules/graphic/detail/layer/ForegroundLayer.h
+		src/interpreter/modules/graphic/detail/layer/FixLayer.h
+		src/interpreter/modules/graphic/detail/layer/BaseLayer.h
 )
 
 target_include_directories(raptor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)

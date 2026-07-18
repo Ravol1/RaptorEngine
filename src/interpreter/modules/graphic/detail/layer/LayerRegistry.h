@@ -1,19 +1,20 @@
 #ifndef RAPTOR_LAYERREGISTRY_H
 #define RAPTOR_LAYERREGISTRY_H
 #include <memory>
-#include <unordered_map>
-#include <array>
-#include <string_view>
-#include <algorithm>
 
 #include "Layer.h"
+#include "MessageLayer.h"
+
 
 
 namespace raptor::interpreter::graphic::detail {
 	class LayerRegistry {
 	public:
+
 		LayerRegistry();
 		~LayerRegistry();
+
+		auto layer_exists(const std::string& name) -> bool;
 		
 		auto get_or_create(const std::string& name) -> Layer*;
 	private:

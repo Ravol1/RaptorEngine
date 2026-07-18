@@ -7,7 +7,7 @@ namespace raptor::interpreter::graphic::detail {
 	struct CurrentLayer {
 		using LayerPage = Layer::LayerPage;
 
-		Layer* layer = nullptr;
+		MessageLayer* layer;
 		LayerPage page = LayerPage::Fore;
 	};
 }

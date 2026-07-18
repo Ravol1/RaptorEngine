@@ -607,7 +607,9 @@ namespace raptor::interpreter {
 				impl_->current_.file, tag.line, tag.type
 			), Severity::Info);
 
-
+		if (tag.type == "layopt") {
+			auto a = 42;
+		}
 		// Execute the tag
 		it->second(tag, this);
 	}

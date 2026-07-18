@@ -11,15 +11,21 @@
 namespace raptor::interpreter::graphic {
 	using namespace detail;
 
+
 	class Graphic::Impl {
 	public:
-		LayerRegistry layerRegistry_{};
+		LayerRegistry layer_registry_{};
 		CurrentLayer current_{};
 		FreeLayer freeLayer_{};
 	};
 
 	Graphic::Graphic() : Module(), impl_(std::make_unique<Impl>()) {
-		impl_->current_.layer = impl_->layerRegistry_.get_or_create("message0");
+		auto message0 = impl_->layer_registry_.get_or_create("message0");
+
+
+		impl_->current_.layer = dynamic_cast<MessageLayer*>(message0);
+
+
 		impl_->current_.layer->set_visible(true, Layer::LayerPage::Fore);
 	}
 
@@ -28,11 +34,11 @@ namespace raptor::interpreter::graphic {
 
 	auto Graphic::register_commands(Interpreter* interpreter) -> void {
 		interpreter->register_command("layopt", [this](const Tag& tag, Interpreter*) -> void {
-			layopt(tag, impl_->layerRegistry_, impl_->current_);
+			layopt(tag, impl_->layer_registry_, impl_->current_);
 		});
 
 		interpreter->register_command("position", [this](const Tag& tag, Interpreter*) {
-			position(tag, impl_->layerRegistry_, impl_->current_);
+			position(tag, impl_->layer_registry_, impl_->current_);
 		});
 
 		interpreter->register_command("title", [this](const Tag& tag, Interpreter* interpreter) -> void {
