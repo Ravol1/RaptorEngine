@@ -4,15 +4,20 @@
 
 
 namespace raptor::engine::video {
-	using Sprite = sprite::Sprite;
-
-
-	ScreenObject::ScreenObject(std::unique_ptr<Sprite> sprite) : is_dirty_(true), sprite_(std::move(sprite)) {}
-
+	ScreenObject::ScreenObject (
+		std::unique_ptr<Sprite> sprite,
+		int z,
+		int width, int height
+	) :
+	is_dirty_(true),
+	width_(static_cast<float>(width)),
+	height_(static_cast<float>(height)),
+	z_(z),
+	sprite_(std::move(sprite)){}
 
 	auto ScreenObject::render(SDL_Renderer* renderer) -> void {
 		if (is_dirty_) {
-			sprite_->update(pos_, Sprite::autosize, Sprite::autosize);
+			sprite_->update(pos_, width_, height_);
 			is_dirty_ = false;
 		}
 

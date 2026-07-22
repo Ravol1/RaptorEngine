@@ -4,7 +4,9 @@
 
 namespace raptor::interpreter::graphic::detail {
 	class ForegroundLayer : public Layer {
-
+	public:
+		static constexpr int BASE = 0;
+		ForegroundLayer(int index) : Layer(BASE + 2*index) {}
 	};
 } // raptor::interpreter::graphic::detail
 

@@ -42,7 +42,7 @@ namespace raptor::interpreter::graphic::detail {
 
 			return std::nullopt;
 		}
-	};
+	}
 
 
 	class LayerRegistry::Impl {
@@ -65,7 +65,8 @@ namespace raptor::interpreter::graphic::detail {
 				break;
 
 			case LayerType::Foreground:
-				layer = std::make_unique<ForegroundLayer>();
+				int index = std::stoi(name);
+				layer = std::make_unique<ForegroundLayer>(index);
 				break;
 			}
 

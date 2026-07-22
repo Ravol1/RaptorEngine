@@ -9,7 +9,12 @@
 namespace raptor::engine::video {
 	class ScreenObject {
 	public:
-		using Sprite = sprite::Sprite;
+		ScreenObject(
+			std::unique_ptr<Sprite> sprite,
+			int z = 0,
+			int width = Sprite::autosize, int height = Sprite::autosize
+			);
+		virtual ~ScreenObject() = default;
 
 		ScreenObject(std::unique_ptr<Sprite> sprite);
 
@@ -43,11 +48,18 @@ namespace raptor::engine::video {
 		auto virtual render(SDL_Renderer* renderer) -> void;
 
 
-		virtual ~ScreenObject() = default;
+		void set_z(int z) {z_ = z;}
+		[[nodiscard]]
+		auto get_z() const -> int {return z_;}
+
 
 	private:
 		bool is_dirty_ = false;
 		bool is_visible_ = true;
+
+		const float width_, height_;
+
+		int z_ = 0;
 
 		SDL_FPoint pos_{0, 0};
 

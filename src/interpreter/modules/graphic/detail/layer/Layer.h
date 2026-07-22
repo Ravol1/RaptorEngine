@@ -22,7 +22,9 @@ namespace raptor::interpreter::graphic::detail {
 
 		};
 
+		Layer(int z_base = -2) : z_back_(z_base), z_fore(z_base + 1) {}
 		virtual ~Layer() = default;
+
 
 		auto set_visible(bool visible, LayerPage page) {
 			auto& target = get_options(page);
@@ -47,6 +49,8 @@ namespace raptor::interpreter::graphic::detail {
 
 
 	protected:
+		const int z_back_ = -2;
+		const int z_fore = -1;
 		auto get_options(LayerPage page) -> LayerOptions& {
 			return page == LayerPage::Back ? back_ : fore_;
 		}

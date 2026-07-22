@@ -8,6 +8,10 @@
 
 namespace raptor::interpreter::graphic::detail {
 	class BaseLayer : public Layer {
+	public:
+		static constexpr int BASE = -9999;
+
+		BaseLayer() : Layer(BASE) {}
 
 	};
 } // raptor::interpreter::graphic::detail
