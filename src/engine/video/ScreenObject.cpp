@@ -6,9 +6,11 @@
 namespace raptor::engine::video {
 	ScreenObject::ScreenObject (
 		std::unique_ptr<Sprite> sprite,
+		uint64_t id,
 		int z,
 		int width, int height
 	) :
+	id_(id),
 	is_dirty_(true),
 	width_(static_cast<float>(width)),
 	height_(static_cast<float>(height)),

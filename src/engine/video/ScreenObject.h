@@ -11,6 +11,7 @@ namespace raptor::engine::video {
 	public:
 		ScreenObject(
 			std::unique_ptr<Sprite> sprite,
+			uint64_t id,
 			int z = 0,
 			int width = Sprite::autosize, int height = Sprite::autosize
 			);
@@ -52,6 +53,8 @@ namespace raptor::engine::video {
 		[[nodiscard]]
 		auto get_z() const -> int {return z_;}
 
+		[[nodiscard]]
+		auto id() const -> uint64_t {return id_;}
 
 
 		void set_alpha(float alpha) {
@@ -64,6 +67,8 @@ namespace raptor::engine::video {
 
 
 	private:
+		uint64_t id_;
+
 		bool is_dirty_ = false;
 		bool is_visible_ = true;
 
