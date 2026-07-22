@@ -29,7 +29,7 @@ namespace raptor {
 
 
 		bool init();
-		void interpreter_thread_loop(game_event::EventQueue* event_queue);
+		void interpreter_thread_loop();
 
 		SDL_Window* window_ = nullptr;
 		SDL_Renderer* renderer_ = nullptr;

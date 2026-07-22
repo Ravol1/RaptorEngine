@@ -86,11 +86,7 @@ namespace raptor {
 
 
 	auto Application::run() -> int {
-		std::thread scripting_thread(&
-			Application::interpreter_thread_loop,
-			this,
-			&event_queue_
-		);	// Launch interpreter thread
+		std::thread scripting_thread(&Application::interpreter_thread_loop, this);	// Launch interpreter thread
 
 		graphics_loop_->run();	// Start the main graphics loop on this thread.
 
@@ -100,8 +96,8 @@ namespace raptor {
 
 
 
-	void Application::interpreter_thread_loop(game_event::EventQueue* event_queue) {
-		Interpreter interpreter{root, event_queue};
+	void Application::interpreter_thread_loop() {
+		Interpreter interpreter{root, &event_queue_};
 		interpreter.set_log(interpreter_log);
 		interpreter.load_modules();
 		interpreter.start_execution(running_);
