@@ -3,6 +3,10 @@
 #include <cstdint>
 #include <utility>
 
+#include "interpreter/Interpreter.h"
+#include "interpreter/modules/graphic/detail/object/Object.h"
+#include "events/game_event.h"
+
 
 namespace raptor::interpreter::graphic::detail {
 	class Layer {

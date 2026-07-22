@@ -1,5 +1,6 @@
 #ifndef RAPTOR_SCREENOBJECT_H
 #define RAPTOR_SCREENOBJECT_H
+#include <algorithm>
 #include <memory>
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
