@@ -1,7 +1,3 @@
-//
-// Created by matteo on 7/9/26.
-//
-
 #ifndef RAPTOR_TEXTUREFACTORY_H
 #define RAPTOR_TEXTUREFACTORY_H
 #include <filesystem>
@@ -11,7 +7,7 @@
 #include <SDL3_image/SDL_image.h>
 
 
-namespace raptor::engine::video::texture {
+namespace raptor::engine::video {
 	class TextureFactory {
 	public:
 		TextureFactory(SDL_Renderer* renderer) {
@@ -77,7 +73,7 @@ namespace raptor::engine::video::texture {
 		SDL_Texture* fallback_texture_ = nullptr;
 		std::unordered_map<std::string, SDL_Texture*> texture_map_;
 	};
-}
+} // raptor::engine::video
 
 
 
