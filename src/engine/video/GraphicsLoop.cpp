@@ -16,6 +16,7 @@ namespace raptor::engine {
 	window_(window),
 	event_queue_(event_queue),
 	texture_factory_{renderer_},
+	transition_manager_{&obj_registry_},
 	running_(running) {}
 
 
@@ -44,13 +45,15 @@ namespace raptor::engine {
 
 			// --- UPDATE ---
 			obj_registry_.update(dt);
-
+			transition_manager_.update(dt);
 
 			// --- RENDER ---
 			// Background
 			SDL_SetRenderDrawColor(renderer_, BACK_COLOR.r, BACK_COLOR.g, BACK_COLOR.b, BACK_COLOR.a);
 			SDL_RenderClear(renderer_);
+
 			obj_registry_.render(renderer_);
+
 			SDL_RenderPresent(renderer_);
 
 
@@ -145,4 +148,13 @@ namespace raptor::engine {
 		}
 	}
 
+	/**
+	 * @brief Handles a PerformTransition event.
+	 * @param event		The event to process.
+	 */
+	void GraphicsLoop::handle_perform_transition(const game_event::GameEvent& event) {
+		if (auto data = std::get_if<game_event::PerformTransitionData>(&event.data)) {
+			transition_manager_.create_transition(data);
+		}
+	}
 } // raptor::engine

@@ -17,6 +17,8 @@ namespace raptor::interpreter::graphic {
 		LayerRegistry layer_registry_{};
 		CurrentLayer current_{};
 		FreeLayer freeLayer_{};
+
+		TransitionManager transition_manager_{};
 	};
 
 	Graphic::Graphic() : Module(), impl_(std::make_unique<Impl>()) {

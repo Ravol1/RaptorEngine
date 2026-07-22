@@ -13,15 +13,17 @@ namespace raptor::game_event {
 		RenderImage,
 		ChangeTitle,
 		LoadObject,
+		PerformTransition,
 	};
 
 
 	struct RenderImageData {std::string path; float x,y; float width, height;};
 	struct ChangeTitleData {std::string title;};
 	struct LoadObjectData {uint64_t id; std::string texture_path; int z; float x,y; float width, height; bool visible;};
+	struct PerformTransitionData {uint64_t id; std::vector<uint64_t> fadeIn; std::vector<uint64_t> fadeOut; int time;};
 
 
-	using GameEventData = std::variant<RenderImageData, ChangeTitleData, LoadObjectData>;
+	using GameEventData = std::variant<RenderImageData, ChangeTitleData, LoadObjectData, PerformTransitionData>;
 
 
 	struct GameEvent {

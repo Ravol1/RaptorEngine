@@ -6,6 +6,7 @@
 
 #include "events/game_event.h"
 #include "objects/ScreenObjRegistry.h"
+#include "transition/TransitionManager.h"
 
 namespace raptor::engine {
 	class GraphicsLoop {
@@ -30,6 +31,7 @@ namespace raptor::engine {
 		game_event::EventQueue* event_queue_;
 		video::ScreenObjRegistry obj_registry_{};
 		video::TextureFactory texture_factory_;
+		video::TransitionManager transition_manager_;
 
 		std::atomic<bool>& running_;
 
