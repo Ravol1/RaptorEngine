@@ -18,19 +18,18 @@ namespace raptor::engine::video {
 		virtual ~ScreenObject() = default;
 
 
-
-		/** @brief Return the current screen coordinates (top-left) of the object. */
+		/** @brief Returns the current screen coordinates (top-left) of the object. */
 		[[nodiscard]]
 		auto get_pos() const -> SDL_FPoint {return pos_;}
 
 		/** @brief Sets the screen coordinates (top-left) of the object. */
 		auto set_pos(SDL_FPoint pos) -> void {this->pos_ = pos;}
 
-		/** @brief Sets the dirty flag to true*/
+		/** @brief Sets the dirty flag to true. */
 		auto set_dirty() -> void {is_dirty_ = true;}
 
 
-		/** @brief Sets the visibility flag and updated the internal sprite accordingly */
+		/** @brief Sets the visibility flag and updated the internal sprite accordingly. */
 		auto set_visible(bool visible) -> void {
 			is_visible_ = visible;
 			sprite_->set_visible(visible);

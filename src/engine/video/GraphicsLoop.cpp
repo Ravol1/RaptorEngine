@@ -103,7 +103,7 @@ namespace raptor::engine {
 
 
 	/**
-	 * @bried Processes a game event
+	 * @brief Processes a game event
 	 * @param event		The event to process.
 	 */
 	void GraphicsLoop::process_event(const game_event::GameEvent& event) {
