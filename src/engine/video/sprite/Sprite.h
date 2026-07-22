@@ -4,7 +4,7 @@
 #include <SDL3/SDL_render.h>
 
 
-namespace raptor::engine::video::sprite {
+namespace raptor::engine::video {
 	class Sprite {
 	public:
 		constexpr static float autosize = -1.0f;

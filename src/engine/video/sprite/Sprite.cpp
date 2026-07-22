@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-namespace raptor::engine::video::sprite {
+namespace raptor::engine::video {
 	Sprite::Sprite(SDL_Texture* texture, const std::optional<SDL_FRect>& src) : texture_(texture), src_(src) {}
 
 
