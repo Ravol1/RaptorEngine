@@ -53,6 +53,16 @@ namespace raptor::engine::video {
 		auto get_z() const -> int {return z_;}
 
 
+
+		void set_alpha(float alpha) {
+			alpha_ = std::clamp(alpha, 0.0f, 1.0f);
+			is_dirty_ = true;
+		}
+
+		[[nodiscard]]
+		auto get_alpha() const -> float {return alpha_;}
+
+
 	private:
 		bool is_dirty_ = false;
 		bool is_visible_ = true;
@@ -62,6 +72,8 @@ namespace raptor::engine::video {
 		int z_ = 0;
 
 		SDL_FPoint pos_{0, 0};
+
+		float alpha_ = 1;
 
 		std::unique_ptr<Sprite> sprite_;
 	};

@@ -32,10 +32,12 @@ namespace raptor::engine::video::sprite {
 
 
 
-	auto Sprite::render(SDL_Renderer* renderer) -> void {
+	auto Sprite::render(SDL_Renderer* renderer, float alpha) -> void {
 		if (texture_ == nullptr || !is_visible_) return;
 
 
+		if (alpha != 1.0f) SDL_SetTextureAlphaModFloat(texture_, alpha);
 		SDL_RenderTexture(renderer, texture_, src_ ? &*src_ : nullptr, &dst_rect_);
+		if (alpha != 1.0f) SDL_SetTextureAlphaModFloat(texture_, 1.0f);
 	}
 } // raptor::engine::video::sprite

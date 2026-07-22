@@ -56,7 +56,7 @@ namespace raptor::engine::video::sprite {
 		 * @note This function safely extracts the raw pointer from the std::optional source
 		 * rectangle on every frame. The introduced overhead is negligible.
 		 */
-		auto virtual render(SDL_Renderer* renderer) -> void;
+		auto virtual render(SDL_Renderer* renderer, float alpha) -> void;
 
 
 		virtual ~Sprite() = default;

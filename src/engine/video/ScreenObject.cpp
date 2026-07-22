@@ -21,6 +21,6 @@ namespace raptor::engine::video {
 			is_dirty_ = false;
 		}
 
-		sprite_->render(renderer);
+		sprite_->render(renderer, alpha_);
 	}
 } // raptor::engine::video

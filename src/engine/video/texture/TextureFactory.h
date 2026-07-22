@@ -55,6 +55,10 @@ namespace raptor::engine::video::texture {
 				if (!texture) return fallback_texture_;
 
 				texture_map_[path] = texture;
+
+				// Necessary to set texture alpha later
+				SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+
 				return texture;
 			}
 
