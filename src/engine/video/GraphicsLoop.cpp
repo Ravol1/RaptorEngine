@@ -93,11 +93,16 @@ namespace raptor::engine {
 			break;
 
 		case game_event::GameEventType::ChangeTitle:
-			if (auto val = std::get_if<game_event::ChangeTitleData>(&event.data)) {
-				SDL_SetWindowTitle(window_, val->title.c_str());
-			}
-
+			handle_change_title(event);
 			break;
 		}
 	}
-}
+	/**
+	 * @brief Handles a ChangeTitle event.
+	 * @param event		The event to process.
+	 */
+	void GraphicsLoop::handle_change_title(const game_event::GameEvent& event) {
+		if (auto data = std::get_if<game_event::ChangeTitleData>(&event.data)) {
+			SDL_SetWindowTitle(window_, data->title.c_str());
+		}
+	}
