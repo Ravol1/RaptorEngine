@@ -5,7 +5,7 @@
 
 #include "../Sprite.h"
 
-namespace raptor::engine::video::sprite::factory {
+namespace raptor::engine::video::sprite_factory {
 
 	inline auto create_static() -> std::unique_ptr<Sprite> {
 		return std::make_unique<Sprite>();
@@ -14,6 +14,6 @@ namespace raptor::engine::video::sprite::factory {
 	inline auto create_static(SDL_Texture* texture) -> std::unique_ptr<Sprite> {
 		return std::make_unique<Sprite>(texture);
 	}
-} // raptor::engine::video::sprite
+} // raptor::engine::video::sprite::sprite_factory
 
 #endif //RAPTOR_SPRITE_FACTORY_H
