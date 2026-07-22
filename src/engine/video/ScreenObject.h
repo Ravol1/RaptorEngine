@@ -23,7 +23,7 @@ namespace raptor::engine::video {
 		auto get_pos() const -> SDL_FPoint {return pos_;}
 
 		/** @brief Sets the screen coordinates (top-left) of the object. */
-		auto set_pos(SDL_FPoint pos) -> void {this->pos_ = pos;}
+		auto set_pos(SDL_FPoint pos) -> void {this->pos_ = pos; is_dirty_ = true;}
 
 		/** @brief Sets the dirty flag to true. */
 		auto set_dirty() -> void {is_dirty_ = true;}
