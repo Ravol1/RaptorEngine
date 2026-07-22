@@ -11,7 +11,12 @@ namespace raptor::engine {
 			SDL_Window* window,
 			game_event::EventQueue* event_queue,
 			std::atomic<bool>& running
-	) : renderer_(renderer), window_(window), event_queue_(event_queue), running_(running) {}
+	) :
+	renderer_(renderer),
+	window_(window),
+	event_queue_(event_queue),
+	texture_factory_{renderer_},
+	running_(running) {}
 
 
 
@@ -35,10 +40,18 @@ namespace raptor::engine {
 			for (const auto& evt : event_queue_->flush())
 				process_event(evt);
 
-			// Set a generic background
+
+
+			// --- UPDATE ---
+			obj_registry_.update(dt);
+
+
+			// --- RENDER ---
+			// Background
 			SDL_SetRenderDrawColor(renderer_, BACK_COLOR.r, BACK_COLOR.g, BACK_COLOR.b, BACK_COLOR.a);
 			SDL_RenderClear(renderer_);
-			SDL_RenderPresent(renderer_);	// Synchronize with monitor refresh_rate
+			obj_registry_.render(renderer_);
+			SDL_RenderPresent(renderer_);
 
 
 			log_fps(dt);
@@ -95,6 +108,14 @@ namespace raptor::engine {
 		case game_event::GameEventType::ChangeTitle:
 			handle_change_title(event);
 			break;
+
+		case game_event::GameEventType::LoadObject:
+			handle_load_object(event);
+			break;
+
+		case game_event::GameEventType::PerformTransition:
+			handle_perform_transition(event);
+			break;
 		}
 	}
 
@@ -105,6 +126,22 @@ namespace raptor::engine {
 	void GraphicsLoop::handle_change_title(const game_event::GameEvent& event) {
 		if (auto data = std::get_if<game_event::ChangeTitleData>(&event.data)) {
 			SDL_SetWindowTitle(window_, data->title.c_str());
+		}
+	}
+
+	/**
+	 * @brief Handles a LoadObject event.
+	 * @param event		The event to process.
+	 */
+	void GraphicsLoop::handle_load_object(const game_event::GameEvent& event) {
+		if (auto data = std::get_if<game_event::LoadObjectData>(&event.data)) {
+			auto new_obj = obj_registry_.create_object(
+				data->id,
+				data->texture_path,
+				static_cast<int>(data->width), static_cast<int>(data->height),
+				texture_factory_, renderer_);
+			new_obj->set_pos({data->x, data->y});
+			new_obj->set_visible(data->visible);
 		}
 	}
 
