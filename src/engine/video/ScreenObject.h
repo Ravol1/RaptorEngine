@@ -17,7 +17,6 @@ namespace raptor::engine::video {
 			);
 		virtual ~ScreenObject() = default;
 
-		ScreenObject(std::unique_ptr<Sprite> sprite);
 
 
 		/** @brief Return the current screen coordinates (top-left) of the object. */
