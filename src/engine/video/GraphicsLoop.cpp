@@ -97,6 +97,7 @@ namespace raptor::engine {
 			break;
 		}
 	}
+
 	/**
 	 * @brief Handles a ChangeTitle event.
 	 * @param event		The event to process.
@@ -106,3 +107,5 @@ namespace raptor::engine {
 			SDL_SetWindowTitle(window_, data->title.c_str());
 		}
 	}
+
+} // raptor::engine
