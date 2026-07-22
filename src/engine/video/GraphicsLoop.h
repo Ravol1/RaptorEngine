@@ -35,12 +35,9 @@ namespace raptor::engine {
 
 		std::atomic<bool>& running_;
 
-		const double frequency_ = static_cast<double>(SDL_GetPerformanceFrequency());
-		uint64_t last_time = 0;
-
 
 		static bool poll_sys_events();
-		auto calculate_dt() -> double;
+		static auto calculate_dt(uint64_t& last_time) -> double;
 		void process_event(const game_event::GameEvent& event);
 		void handle_change_title(const game_event::GameEvent& event);
 		void handle_load_object(const game_event::GameEvent& event);

@@ -22,12 +22,12 @@ namespace raptor::engine {
 
 
 	void GraphicsLoop::run() {
-		uint64_t last_time = SDL_GetPerformanceCounter();
 		static constexpr SDL_Color BACK_COLOR(30, 30, 40, 255);
+		uint64_t last_time = SDL_GetPerformanceCounter();
 
 		// --- MAIN THREAD LOOP ---
 		while (running_) {
-			auto dt = calculate_dt();
+			auto dt = calculate_dt(last_time);
 
 
 			// Poll and process system events
@@ -87,12 +87,15 @@ namespace raptor::engine {
 	 *
 	 * @return The calculated delta time
 	 */
-	auto GraphicsLoop::calculate_dt() -> double {
+	auto GraphicsLoop::calculate_dt(uint64_t& last_time) -> double {
+		static const auto frequency = static_cast<double>(SDL_GetPerformanceFrequency());
+
+
 		uint64_t current_time = SDL_GetPerformanceCounter();
 		uint64_t frame_ticks = current_time - last_time;
 		last_time = current_time;
 
-		auto dt = static_cast<float>(frame_ticks) / frequency_;
+		auto dt = static_cast<double>(frame_ticks) / static_cast<double>(frequency);
 		if (dt > 0.1) dt = 0.1;
 
 		return dt;
