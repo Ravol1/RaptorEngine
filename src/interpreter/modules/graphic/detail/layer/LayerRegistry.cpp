@@ -1,7 +1,6 @@
 #include "LayerRegistry.h"
 
 #include <unordered_map>
-#include <array>
 
 #include "BaseLayer.h"
 #include "ForegroundLayer.h"

@@ -2,7 +2,6 @@
 #define RAPTOR_SPRITE_FACTORY_H
 
 #include <memory>
-#include <vector>
 
 #include "../Sprite.h"
 
