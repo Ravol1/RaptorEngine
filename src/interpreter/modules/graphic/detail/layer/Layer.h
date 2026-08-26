@@ -35,20 +35,16 @@ namespace raptor::interpreter::graphic::detail {
 
 
 		auto set_visible(bool visible, LayerPage page) {
-			auto& target = get_options(page);
-			target.visible = visible;
+			set_property<&LayerOptions::visible>(visible, page);
 		}
 		auto set_x(float x, LayerPage page) {
-			auto& target = get_options(page);
-			target.x = x;
+			set_property<&LayerOptions::x>(x, page);
 		}
 		auto set_y(float y, LayerPage page) {
-			auto& target = get_options(page);
-			target.y = y;
+			set_property<&LayerOptions::y>(y, page);
 		}
 		auto set_alpha(uint8_t alpha, LayerPage page) {
-			auto& target = get_options(page);
-			target.alpha = alpha;
+			set_property<&LayerOptions::alpha>(alpha, page);
 		}
 
 
@@ -103,6 +99,13 @@ namespace raptor::interpreter::graphic::detail {
 
 		auto get_page(LayerPage page) -> std::vector<Object>& {
 			return page == LayerPage::Back ? back_ : fore_;
+		}
+
+
+		template <auto MemberPtr, typename T>
+		void set_property(T&& value, LayerPage page) {
+			auto& target = get_options(page);
+			target.*MemberPtr = value;
 		}
 
 	};
