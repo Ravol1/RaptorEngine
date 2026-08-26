@@ -5,7 +5,7 @@
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
 
-#include "sprite/Sprite.h"
+#include "engine/video/sprite/Sprite.h"
 
 namespace raptor::engine::video {
 	class ScreenObject {
