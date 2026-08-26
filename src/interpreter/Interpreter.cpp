@@ -120,6 +120,8 @@ namespace raptor::interpreter {
 				));
 
 
+			paths_.bgimage = try_get_subdir(root, fs::path("data") / "bgimage");
+
 			event_queue_ = event_queue;
 
 
@@ -157,7 +159,7 @@ namespace raptor::interpreter {
 		 */
 		struct Paths {
 			fs::path scenario;
-			fs::path image_path;
+			fs::path bgimage;
 			fs::path bgm_path;
 			// Continue with the list of all paths
 		};
@@ -664,5 +666,10 @@ namespace raptor::interpreter {
 
 	auto Interpreter::push_event(game_event::GameEventType type, game_event::GameEventData data) -> void {
 		impl_->event_queue_->push({type, std::move(data)});
+	}
+
+
+	auto Interpreter::bgimage_path() const -> std::filesystem::path {
+		return impl_->paths_.bgimage;
 	}
 } // raptor::interpreter

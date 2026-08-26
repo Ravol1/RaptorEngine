@@ -37,6 +37,8 @@ namespace raptor::interpreter {
 
 		auto push_event(game_event::GameEventType type, game_event::GameEventData data) -> void;
 
+		[[nodiscard]]
+		auto bgimage_path() const -> std::filesystem::path;
 
 	private:
 		class Impl;

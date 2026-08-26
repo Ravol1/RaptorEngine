@@ -35,7 +35,7 @@ namespace raptor::interpreter::graphic {
 
 
 	auto Graphic::register_commands(Interpreter* interpreter) -> void {
-		interpreter->register_command("layopt", [this](const Tag& tag, Interpreter*) -> void {
+		interpreter->register_command("layopt", [this](const Tag& tag, Interpreter*) {
 			layopt(tag, impl_->layer_registry_, impl_->current_);
 		});
 
@@ -43,8 +43,12 @@ namespace raptor::interpreter::graphic {
 			position(tag, impl_->layer_registry_, impl_->current_);
 		});
 
-		interpreter->register_command("title", [this](const Tag& tag, Interpreter* interpreter) -> void {
-			title(tag, interpreter);
+		interpreter->register_command("title", [this](const Tag& tag, Interpreter* interp) {
+			title(tag, interp);
+		});
+
+		interpreter->register_command("bg", [this](const Tag& tag, Interpreter* interp) {
+			bg(tag, &impl_->layer_registry_, &impl_->transition_manager_, interp);
 		});
 	}
 } // raptor::interpreter::graphic

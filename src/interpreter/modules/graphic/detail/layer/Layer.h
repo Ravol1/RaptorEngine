@@ -26,6 +26,10 @@ namespace raptor::interpreter::graphic::detail {
 
 		};
 
+
+		constexpr static int autosize = -1;
+
+
 		Layer(int z_base = -2) : z_back_(z_base), z_fore(z_base + 1) {}
 		virtual ~Layer() = default;
 
@@ -101,8 +105,6 @@ namespace raptor::interpreter::graphic::detail {
 			return page == LayerPage::Back ? back_ : fore_;
 		}
 
-		LayerOptions fore_{};
-		LayerOptions back_{};
 	};
 } // raptor::interpreter::graphic::detail
 
