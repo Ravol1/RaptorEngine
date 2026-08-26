@@ -22,6 +22,10 @@ namespace raptor::engine::video {
 			SDL_Renderer* renderer
 		) -> ScreenObject*;
 
+
+		void delete_object(uint64_t id);
+
+
 		/** @brief updated all the stored screen objects. */
 		void update(double dt);
 

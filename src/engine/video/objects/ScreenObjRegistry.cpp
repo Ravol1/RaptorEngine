@@ -29,6 +29,17 @@ namespace raptor::engine::video {
 	}
 
 
+	void ScreenObjRegistry::delete_object(uint64_t id) {
+		if (!object_table_.contains(id)) return;
+
+		std::erase_if(objects_, [id](const auto& obj) {
+			return obj && obj->id() == id;
+		});
+
+		object_table_.erase(id);
+	}
+
+
 	auto ScreenObjRegistry::get_object(uint64_t id) const -> ScreenObject* {
 		if (!object_table_.contains(id)) return nullptr;
 

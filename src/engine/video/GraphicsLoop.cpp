@@ -119,6 +119,10 @@ namespace raptor::engine {
 			handle_load_object(event);
 			break;
 
+		case game_event::GameEventType::DeleteObject:
+			handle_delete_object(event);
+			break;
+
 		case game_event::GameEventType::PerformTransition:
 			handle_perform_transition(event);
 			break;
@@ -148,6 +152,17 @@ namespace raptor::engine {
 				texture_factory_, renderer_);
 			new_obj->set_pos({data->x, data->y});
 			new_obj->set_visible(data->visible);
+		}
+	}
+
+
+	/**
+	 * @brief Handles a DeleteObject event.
+	 * @param event		The event to process.
+	 */
+	void GraphicsLoop::handle_delete_object(const game_event::GameEvent& event) {
+		if (auto data = std::get_if<game_event::DeleteObjectData>(&event.data)) {
+			obj_registry_.delete_object(data->id);
 		}
 	}
 

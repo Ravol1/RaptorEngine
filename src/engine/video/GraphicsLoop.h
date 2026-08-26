@@ -39,9 +39,10 @@ namespace raptor::engine {
 		static bool poll_sys_events();
 		static auto calculate_dt(uint64_t& last_time) -> double;
 		void process_event(const game_event::GameEvent& event);
+
 		void handle_change_title(const game_event::GameEvent& event);
 		void handle_load_object(const game_event::GameEvent& event);
-
+		void handle_delete_object(const game_event::GameEvent& event);
 		void handle_perform_transition(const game_event::GameEvent& event);
 	};
 } //raptor::engine
