@@ -26,6 +26,8 @@ namespace raptor::engine {
 		void run();
 
 	private:
+		static constexpr bool LOG_FPS = false;
+
 		SDL_Renderer* renderer_;
 		SDL_Window* window_;
 		game_event::EventQueue* event_queue_;

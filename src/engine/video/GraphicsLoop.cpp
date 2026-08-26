@@ -57,7 +57,8 @@ namespace raptor::engine {
 			SDL_RenderPresent(renderer_);
 
 
-			log_fps(dt);
+			if (LOG_FPS)
+				log_fps(dt);
 		}
 	}
 
