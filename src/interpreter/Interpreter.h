@@ -57,6 +57,7 @@ namespace raptor::interpreter {
 			UnknownTag,
 			MissingScript,
 			ScriptNotEnded,
+			BadFortmat,
 		};
 	};
 } // raptor::interpreter

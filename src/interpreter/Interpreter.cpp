@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <fstream>
 #include <utility>
+#include <thread>
+#include <chrono>
 
 #include "parser/parser.h"
 #include "interpreter/modules/graphic/Graphic.h"
@@ -434,7 +436,7 @@ namespace raptor::interpreter {
 		 *         the closing tag '[endscript]' is never reached.
 		 *
 		 * @note The actual delegation to the script engine is not yet
-		 *       implemented in this function (see trailing comment in the body).
+		 *       implemented in this function.
 		 */
 		auto iscript_cmd(const Tag& tag) -> void {
 			std::string script_text;
@@ -446,7 +448,11 @@ namespace raptor::interpreter {
 				if (auto& new_tag = current_.program->at(script_ptr); new_tag.type == "script")
 						script_text.append(new_tag.get_attribute("code"));
 
-
+			auto name = tag.get_attribute("name");
+			if (name.empty()) {
+				error_ = Errors::MissingAttribute;
+				throw std::runtime_error("Missing required attribute 'name'");
+			}
 				if (current_.program->at(script_ptr).type == "endscript") break;
 			}
 
@@ -472,6 +478,25 @@ namespace raptor::interpreter {
 		auto clearstack_cmd() -> void {
 			call_stack_.clear();
 			macro_stack_.clear();
+		}
+
+
+		auto wait_cmd(const Tag& tag) -> void {
+			auto time_str = tag.get_attribute("time");
+			if (time_str.empty()) {
+				error_ = Errors::MissingAttribute;
+				throw std::runtime_error("Missing required attribute 'name'");
+			}
+
+			int time = 0;
+			auto [ptr, ec] =std::from_chars(time_str.data(), time_str.data() + time_str.size(), time);
+			if (ec != std::errc()) {
+				error_ = Errors::BadFortmat;
+				throw std::runtime_error("Bad time format");
+			}
+
+
+			std::this_thread::sleep_for(std::chrono::milliseconds(time));
 		}
 
 
@@ -537,8 +562,11 @@ namespace raptor::interpreter {
 				// in this program, so move the instruction pointer to the end.
 				current_.ip = current_.program->size();
 				return true;
-			}
 
+			case BadFortmat:
+				current_.ip++;
+				return true;
+			}
 		}
 	};
 
@@ -575,7 +603,10 @@ namespace raptor::interpreter {
 
 		register_command("iscript", [this](const Tag& tag, Interpreter*){impl_->iscript_cmd(tag);});
 
+		register_command("wait", [this](const Tag& tag, Interpreter*){impl_->wait_cmd(tag);});
+
 		register_command("label", [](const Tag&, Interpreter*){});
+
 
 	}
 
