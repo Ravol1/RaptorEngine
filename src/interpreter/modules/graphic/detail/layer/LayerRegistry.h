@@ -17,6 +17,8 @@ namespace raptor::interpreter::graphic::detail {
 		auto layer_exists(const std::string& name) -> bool;
 		
 		auto get_or_create(const std::string& name) -> Layer*;
+
+		auto get_all_message() -> std::vector<MessageLayer*>;
 	private:
 		class Impl;
 		std::unique_ptr<Impl> impl_;

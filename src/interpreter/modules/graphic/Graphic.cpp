@@ -50,6 +50,10 @@ namespace raptor::interpreter::graphic {
 		interpreter->register_command("bg", [this](const Tag& tag, Interpreter* interp) {
 			bg(tag, &impl_->layer_registry_, &impl_->transition_manager_, interp);
 		});
+
+		interpreter->register_command("cm", [this](const Tag& tag, Interpreter* interp) {
+			cm(impl_->layer_registry_, interp);
+		});
 	}
 } // raptor::interpreter::graphic
 

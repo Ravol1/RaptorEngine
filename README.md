@@ -35,6 +35,8 @@ Here is the exact list of the tags currently implemented:
 | `[chara_new]` |
 | `[bg]`        |
 | `[wait]`      |
+| `[cm]`        |
+
 
 
 

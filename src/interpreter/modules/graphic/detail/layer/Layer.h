@@ -48,8 +48,8 @@ namespace raptor::interpreter::graphic::detail {
 		}
 
 
-		auto fore() -> const std::vector<Object>& { return fore_; }
-		auto back() -> const std::vector<Object>& { return back_; }
+		auto fore() -> const std::vector<std::unique_ptr<Object>>& { return fore_; }
+		auto back() -> const std::vector<std::unique_ptr<Object>>& { return back_; }
 
 
 		void add_object(
@@ -62,7 +62,7 @@ namespace raptor::interpreter::graphic::detail {
 			auto& objs = get_page(page);
 			const auto& settings = get_options(page);
 
-			objs.push_back(object);
+			objs.push_back(std::make_unique<Object>(object));
 
 			interpreter->push_event(
 				GameEventType::LoadObject,
@@ -77,6 +77,18 @@ namespace raptor::interpreter::graphic::detail {
 			);
 		}
 
+		void clear_objects(LayerPage page, Interpreter* interpreter) {
+			auto& objs = get_page(page);
+			for (auto& obj : objs) {
+				interpreter->push_event(
+					game_event::GameEventType::DeleteObject,
+					game_event::DeleteObjectData(obj->id)
+					);
+			}
+
+			objs.clear();
+		}
+
 		void virtual swap_pages() { std::swap(fore_settings_, back_settings_); }
 
 
@@ -88,8 +100,8 @@ namespace raptor::interpreter::graphic::detail {
 		LayerOptions fore_settings_{};
 		LayerOptions back_settings_{};
 
-		std::vector<Object> fore_;
-		std::vector<Object> back_;
+		std::vector<std::unique_ptr<Object>> fore_;
+		std::vector<std::unique_ptr<Object>> back_;
 
 
 
@@ -97,7 +109,7 @@ namespace raptor::interpreter::graphic::detail {
 			return page == LayerPage::Back ? back_settings_ : fore_settings_;
 		}
 
-		auto get_page(LayerPage page) -> std::vector<Object>& {
+		auto get_page(LayerPage page) -> std::vector<std::unique_ptr<Object>>& {
 			return page == LayerPage::Back ? back_ : fore_;
 		}
 

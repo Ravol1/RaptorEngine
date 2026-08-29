@@ -47,6 +47,7 @@ namespace raptor::interpreter::graphic::detail {
 	class LayerRegistry::Impl {
 	public:
 		std::unordered_map<std::string, std::unique_ptr<Layer>> layers_;
+		std::vector<MessageLayer*> message_layers_;
 
 		void create_layer(const std::string& name, LayerType type) {
 			std::unique_ptr<Layer> layer;
@@ -60,13 +61,17 @@ namespace raptor::interpreter::graphic::detail {
 				break;
 
 			case LayerType::Message:
-				layer = std::make_unique<MessageLayer>();
+				auto msg_layer = std::make_unique<MessageLayer>();
+				message_layers_.emplace_back(msg_layer.get());
+
+				layer = std::move(msg_layer);
 				break;
 
-			case LayerType::Foreground:
+			case LayerType::Foreground: {
 				int index = std::stoi(name);
 				layer = std::make_unique<ForegroundLayer>(index);
 				break;
+			}
 			}
 
 			layers_.emplace(name, std::move(layer));
@@ -90,5 +95,9 @@ namespace raptor::interpreter::graphic::detail {
 		}
 
 		return nullptr;
+	}
+
+	auto LayerRegistry::get_all_message() -> std::vector<MessageLayer*> {
+		return impl_->message_layers_;
 	}
 } // raptor::interpreter::graphic::layer

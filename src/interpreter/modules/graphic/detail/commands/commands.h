@@ -26,6 +26,9 @@ namespace raptor::interpreter::graphic::detail {
 		TransitionManager* transition_manager,
 		Interpreter* interpreter
 	) -> void;
+
+	/** @brief Clear all text and buttons from all message layers. */
+	auto cm(LayerRegistry& layer_registry, Interpreter* interpreter) -> void;
 } // raptor::interpreter::graphic::detail
 
 #endif //RAPTOR_LAYOPT_H
