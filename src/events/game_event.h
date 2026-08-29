@@ -10,26 +10,40 @@
 namespace raptor::game_event {
 
 	enum class GameEventType {
-		RenderImage,
 		ChangeTitle,
+
 		LoadObject,
 		DeleteObject,
+
+		CreateButton,
+		DeleteButton,
+
 		PerformTransition,
 	};
 
 
-	struct RenderImageData {std::string path; float x,y; float width, height;};
 	struct ChangeTitleData {std::string title;};
+
 	struct LoadObjectData {uint64_t id; std::string texture_path; int z; float x,y; float width, height; bool visible;};
 	struct DeleteObjectData {uint64_t id;};
+
+	struct CreateButtonData {	uint64_t id; std::string texture_path; std::string enter_texture_path;
+								int z; float x,y; float width, height; bool visible;};
+
+	struct DeleteButtonData {uint64_t id;};
+
 	struct PerformTransitionData {uint64_t id; std::vector<uint64_t> fadeIn; std::vector<uint64_t> fadeOut; int time;};
 
 
 	using GameEventData = std::variant<
-		RenderImageData,
 		ChangeTitleData,
+
 		LoadObjectData,
 		DeleteObjectData,
+
+		CreateButtonData,
+		DeleteButtonData,
+
 		PerformTransitionData
 	>;
 
@@ -43,7 +57,7 @@ namespace raptor::game_event {
 
 	class EventQueue {
 	public:
-		auto push(GameEvent event) -> void;
+		auto push(const GameEvent& event) -> void;
 		auto flush() -> std::vector<GameEvent>;
 
 	private:

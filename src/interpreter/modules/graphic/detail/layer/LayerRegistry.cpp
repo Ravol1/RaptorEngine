@@ -60,12 +60,13 @@ namespace raptor::interpreter::graphic::detail {
 				layer = std::make_unique<FixLayer>();
 				break;
 
-			case LayerType::Message:
+			case LayerType::Message: {
 				auto msg_layer = std::make_unique<MessageLayer>();
 				message_layers_.emplace_back(msg_layer.get());
 
 				layer = std::move(msg_layer);
 				break;
+			}
 
 			case LayerType::Foreground: {
 				int index = std::stoi(name);

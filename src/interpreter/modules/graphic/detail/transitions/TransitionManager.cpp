@@ -28,12 +28,12 @@ namespace raptor::interpreter::graphic::detail {
 
 
 		auto fade_in = lay->back()
-			| std::views::transform([](const auto& obj) { return obj.id; })
+			| std::views::transform([](const auto& obj) { return obj->get_id(); })
 			| std::ranges::to<std::vector>();
 
 
 		auto fade_out = lay->fore()
-			| std::views::transform([](const auto& obj){return obj.id; })
+			| std::views::transform([](const auto& obj){return obj->get_id(); })
 			| std::ranges::to<std::vector>();
 
 

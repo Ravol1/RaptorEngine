@@ -13,14 +13,14 @@ namespace raptor::interpreter::graphic::detail {
 
 
 		void change_bg(
-			const std::string& storage,
+			std::string& storage,
 			const Transition& transition,
 			Interpreter* interpreter,
 			TransitionManager* transition_manager
 		) {
 
-			Object obj{new_id(), autosize, autosize, 0,0, storage};
-			add_object(obj, LayerPage::Back, interpreter);
+			Image obj{autosize, autosize, z_fore, 0,0, storage};
+			add_object(std::make_unique<Image>(obj), LayerPage::Back, interpreter);
 
 			transition_manager->add_transition(transition, interpreter);
 		}

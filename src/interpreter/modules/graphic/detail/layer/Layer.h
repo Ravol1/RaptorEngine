@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "interpreter/Interpreter.h"
-#include "interpreter/modules/graphic/detail/object/Object.h"
+#include "interpreter/modules/graphic/detail/object/IObject.h"
 #include "events/game_event.h"
 
 
@@ -48,12 +48,12 @@ namespace raptor::interpreter::graphic::detail {
 		}
 
 
-		auto fore() -> const std::vector<std::unique_ptr<Object>>& { return fore_; }
-		auto back() -> const std::vector<std::unique_ptr<Object>>& { return back_; }
+		auto fore() -> const std::vector<std::unique_ptr<IObject>>& { return fore_; }
+		auto back() -> const std::vector<std::unique_ptr<IObject>>& { return back_; }
 
 
 		void add_object(
-			const Object& object,
+			std::unique_ptr<IObject> object,
 			LayerPage page,
 			Interpreter* interpreter
 		){
@@ -62,28 +62,15 @@ namespace raptor::interpreter::graphic::detail {
 			auto& objs = get_page(page);
 			const auto& settings = get_options(page);
 
-			objs.push_back(std::make_unique<Object>(object));
+			object->send_create(interpreter);
 
-			interpreter->push_event(
-				GameEventType::LoadObject,
-				LoadObjectData{
-					object.id,
-					object.texture_path,
-					page == LayerPage::Back ? z_back_ : z_fore,
-					static_cast<float>(object.x), static_cast<float>(object.y),
-					static_cast<float>(object.width), static_cast<float>(object.height),
-					settings.visible,
-				}
-			);
+			objs.push_back(std::move(object));
 		}
 
 		void clear_objects(LayerPage page, Interpreter* interpreter) {
 			auto& objs = get_page(page);
 			for (auto& obj : objs) {
-				interpreter->push_event(
-					game_event::GameEventType::DeleteObject,
-					game_event::DeleteObjectData(obj->id)
-					);
+				obj->send_destroy(interpreter);
 			}
 
 			objs.clear();
@@ -100,8 +87,8 @@ namespace raptor::interpreter::graphic::detail {
 		LayerOptions fore_settings_{};
 		LayerOptions back_settings_{};
 
-		std::vector<std::unique_ptr<Object>> fore_;
-		std::vector<std::unique_ptr<Object>> back_;
+		std::vector<std::unique_ptr<IObject>> fore_;
+		std::vector<std::unique_ptr<IObject>> back_;
 
 
 
@@ -109,7 +96,7 @@ namespace raptor::interpreter::graphic::detail {
 			return page == LayerPage::Back ? back_settings_ : fore_settings_;
 		}
 
-		auto get_page(LayerPage page) -> std::vector<std::unique_ptr<Object>>& {
+		auto get_page(LayerPage page) -> std::vector<std::unique_ptr<IObject>>& {
 			return page == LayerPage::Back ? back_ : fore_;
 		}
 
