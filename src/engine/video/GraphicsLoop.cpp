@@ -3,6 +3,9 @@
 #include <SDL3/SDL_timer.h>
 
 #include <engine/diagnostic/log_fps.h>
+#include <engine/input/Mouse.h>
+
+using namespace raptor::engine::input;
 
 
 namespace raptor::engine {
@@ -44,6 +47,8 @@ namespace raptor::engine {
 
 
 			// --- UPDATE ---
+			mouse_mgr_.update();
+
 			obj_registry_.update(dt);
 			transition_manager_.update(dt);
 

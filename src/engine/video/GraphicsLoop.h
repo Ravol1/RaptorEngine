@@ -4,6 +4,7 @@
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_timer.h>
 
+#include "engine/input/Mouse.h"
 #include "events/game_event.h"
 #include "objects/ScreenObjRegistry.h"
 #include "transition/TransitionManager.h"
@@ -28,6 +29,8 @@ namespace raptor::engine {
 	private:
 		static constexpr bool LOG_FPS = false;
 
+		input::Mouse mouse_mgr_;
+		
 		SDL_Renderer* renderer_;
 		SDL_Window* window_;
 		game_event::EventQueue* event_queue_;
